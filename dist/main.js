@@ -46,6 +46,10 @@ const $8b83a3ea098f8f5b$var$buildReviews = ({ developer: developer , reviews: re
     return reviewContainer;
 };
 function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
+    // make sure rating is a number
+    //  if no decimal is present round to the base number
+    let rating = Number(options.developer.review_rating || optionns.developer.overall_rating || 0);
+    rating = rating.toFixed(Math.floor(rating) === rating ? 0 : 1);
     const container = document.createElement("div");
     container.classList.add("hc-developer-widget");
     container.classList.toggle("hc-developer-widget--dark", options.dark);
@@ -53,7 +57,7 @@ function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
         dark: options.dark
     }));
     container.appendChild($8b83a3ea098f8f5b$var$buildStar({
-        rating: Number(options.developer.review_rating || optionns.developer.overall_rating || 0).toFixed(1),
+        rating: rating,
         dark: options.dark
     }));
     container.appendChild($8b83a3ea098f8f5b$var$buildReviews({
