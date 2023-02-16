@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "description": "Themes widget",
+  "author": "David Lavieri <david@lavieri.dev>",
   "main": "dist/index.js",
   "source": "src/index.js",
   "license": "MIT",
@@ -12,5 +13,13 @@
   },
   "devDependencies": {
     "parcel": "^2.8.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/falmar/themes-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/falmar/themes-widget/issues"
+  },
+  "homepage": "https://github.com/falmar/themes-widget#readme"
 }
