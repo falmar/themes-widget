@@ -1,5 +1,9 @@
-export default function ThemesWidget (options) {
-  this.destroy = function () {
-    // remove widget from DOM
-  }
+const initialOptions = {
+  selector: '.hc-themes-widget',
 }
+
+const ThemesWidget = (options) => {
+  options = { ...initialOptions, ...options }
+}
+
+export default ThemesWidget
