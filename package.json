@@ -1,0 +1,16 @@
+{
+  "name": "@falmar/themes-widget",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Themes widget",
+  "main": "dist/index.js",
+  "source": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
