@@ -1,0 +1,73 @@
+.hc-developer-widget {
+  max-width: 440px;
+  min-height: 105px;
+  max-height: 180px;
+  background: white;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  color: #0B1033;
+
+  &--dark {
+    background: linear-gradient(180deg, #0E1C6C -32.83%, #2A377D -32.83%, #2A377D -32.81%, #584DC4 131.29%);
+  }
+
+  &__logo-container {
+    height: 41px;
+  }
+
+  &__logo {
+    width: 135px;
+    height: 41px;
+  }
+
+  &__star-container {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-self: center;
+  }
+
+  &__star {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__rating {
+    font-size: 22px;
+    line-height: 35px;
+    color: #0B1033;
+
+    &--dark {
+      color: white;
+    }
+  }
+
+  &__review-container {
+    height: 20px;
+    display: flex;
+    gap: 4px;
+
+    line-height: 20px;
+  }
+
+  &__based {
+    color: #0B1033 !important;
+    font-size: 14px !important;
+
+    &--dark {
+      color: white !important;
+    }
+  }
+
+  &__review {
+    text-decoration: underline !important;
+    color: #0B1033 !important;
+    font-size: 14px !important;
+
+    &--dark {
+      color: white !important;
+    }
+  }
+}
