@@ -1,5 +1,3 @@
-import "./main.css";
-
 const $8b83a3ea098f8f5b$var$logoImgLight = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-light.svg";
 const $8b83a3ea098f8f5b$var$logoImgDark = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg";
 const $8b83a3ea098f8f5b$var$starImg = "https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg";
@@ -67,7 +65,6 @@ function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
     }));
     element.appendChild(container);
 }
-
 
 
 const $cf838c15c8b009ba$var$ENDPOINT = "https://api.staging.heycarson.com";

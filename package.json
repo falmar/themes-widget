@@ -4,9 +4,15 @@
   "version": "0.0.4",
   "description": "Themes widget",
   "author": "David Lavieri <david@lavieri.dev>",
-  "main": "dist/main.js",
-  "source": "src/index.js",
   "license": "MIT",
+  "main": "dist/main.js",
+  "css": "dist/main.css",
+  "source": "src/index.js",
+  "targets": {
+    "css": {
+      "source": "src/widget.scss"
+    }
+  },
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build"

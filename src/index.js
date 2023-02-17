@@ -1,7 +1,5 @@
 import builder from './builder.js'
 
-import './widget.scss'
-
 const ENDPOINT = 'https://api.staging.heycarson.com'
 
 const initialOptions = {
