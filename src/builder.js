@@ -4,6 +4,22 @@ const starImg = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-star.sv
 
 const DEVELOPER_PAGE = 'https://heycarson.com/themes/developer/'
 
+export const checkSize = (container, width) => {
+  const isSmall = width <= 410
+
+  container
+    .classList.toggle('hc-developer-widget--small', isSmall)
+  container
+    .querySelector('.hc-developer-widget__logo-container')
+    .classList.toggle('hc-developer-widget__logo-container--small', isSmall)
+  container
+    .querySelector('.hc-developer-widget__star-container')
+    .classList.toggle('hc-developer-widget__star-container--small', isSmall)
+  container
+    .querySelector('.hc-developer-widget__review-container')
+    .classList.toggle('hc-developer-widget__review-container--small', isSmall)
+}
+
 export const changeWidget = (container, { dark, rating, reviews, developer } = {}) => {
   container
     .classList.toggle('hc-developer-widget--dark', dark)

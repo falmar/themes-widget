@@ -2,6 +2,13 @@ const $8b83a3ea098f8f5b$var$logoImgLight = "https://carson-themes.s3.amazonaws.c
 const $8b83a3ea098f8f5b$var$logoImgDark = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg";
 const $8b83a3ea098f8f5b$var$starImg = "https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg";
 const $8b83a3ea098f8f5b$var$DEVELOPER_PAGE = "https://heycarson.com/themes/developer/";
+const $8b83a3ea098f8f5b$export$c4a38de546513c4e = (container, width)=>{
+    const isSmall = width <= 410;
+    container.classList.toggle("hc-developer-widget--small", isSmall);
+    container.querySelector(".hc-developer-widget__logo-container").classList.toggle("hc-developer-widget__logo-container--small", isSmall);
+    container.querySelector(".hc-developer-widget__star-container").classList.toggle("hc-developer-widget__star-container--small", isSmall);
+    container.querySelector(".hc-developer-widget__review-container").classList.toggle("hc-developer-widget__review-container--small", isSmall);
+};
 const $8b83a3ea098f8f5b$export$1d83028bd73dd3cc = (container, { dark: dark , rating: rating , reviews: reviews , developer: developer  } = {})=>{
     container.classList.toggle("hc-developer-widget--dark", dark);
     container.querySelector(".hc-developer-widget__logo").setAttribute("src", dark ? $8b83a3ea098f8f5b$var$logoImgDark : $8b83a3ea098f8f5b$var$logoImgLight);
@@ -76,15 +83,15 @@ function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
 }
 
 
-const $cf838c15c8b009ba$var$ENDPOINT = "https://api.staging.heycarson.com";
 const $cf838c15c8b009ba$var$initialOptions = {
+    endpoint: "https://api.heycarson.com",
     element: null,
     apiKey: null,
     developer: "",
     darkMode: false
 };
-const $cf838c15c8b009ba$var$fetchDeveloper = async (dev)=>{
-    return await fetch(`${$cf838c15c8b009ba$var$ENDPOINT}/v1/themes/developers/${dev}`).then((res)=>{
+const $cf838c15c8b009ba$var$fetchDeveloper = async (endpoint, dev)=>{
+    return await fetch(`${endpoint}/v1/themes/developers/${dev}`).then((res)=>{
         if (res.ok) return res.json();
         if (res.status === 404) return null;
         const body = res.json();
@@ -100,6 +107,15 @@ class $cf838c15c8b009ba$var$ThemesWidget {
         this.developer = null;
         this.container = null;
         this.viewportHandler = null;
+        this.observerTimeout = null;
+        this.observer = new ResizeObserver((entries)=>{
+            clearTimeout(this.observerTimeout);
+            if (!entries.length) return;
+            const { width: width  } = entries[0].contentRect;
+            this.observerTimeout = setTimeout(()=>{
+                (0, $8b83a3ea098f8f5b$export$c4a38de546513c4e)(this.container, width);
+            }, 100);
+        });
     }
     async render(options = {}) {
         if (!(this.options.element instanceof Element)) throw new Error("options.element: HTMLElement is required");
@@ -109,17 +125,19 @@ class $cf838c15c8b009ba$var$ThemesWidget {
             ...options,
             element: this.options.element
         };
-        if (this.developer?.slug !== this.options.developer) this.developer = await $cf838c15c8b009ba$var$fetchDeveloper(this.options.developer);
+        if (this.developer?.slug !== this.options.developer) this.developer = await $cf838c15c8b009ba$var$fetchDeveloper(this.options.endpoint, this.options.developer);
         if (!this.developer) throw new Error("Developer not found");
         let rating = Number(this.developer.review_rating || this.developer.overall_rating || 0);
         rating = rating.toFixed(Math.floor(rating) === rating ? 0 : 1);
-        if (!this.container) this.container = (0, $8b83a3ea098f8f5b$export$2e2bcd8739ae039)(this.options.element, {
-            rating: rating,
-            developer: this.developer.slug,
-            dark: this.options.darkMode,
-            reviews: this.developer.review_count
-        });
-        else (0, $8b83a3ea098f8f5b$export$1d83028bd73dd3cc)(this.container, {
+        if (!this.container) {
+            this.container = (0, $8b83a3ea098f8f5b$export$2e2bcd8739ae039)(this.options.element, {
+                rating: rating,
+                developer: this.developer.slug,
+                dark: this.options.darkMode,
+                reviews: this.developer.review_count
+            });
+            this.observer.observe(this.container);
+        } else (0, $8b83a3ea098f8f5b$export$1d83028bd73dd3cc)(this.container, {
             rating: rating,
             developer: this.developer.slug,
             dark: this.options.darkMode,
@@ -128,6 +146,7 @@ class $cf838c15c8b009ba$var$ThemesWidget {
     }
     destroy() {
         if (!this.options.element || !this.options.element.childNodes.length) return;
+        this.observer.disconnect();
         this.container.removeEventListener("resize", this.viewportHandler);
         this.options.element.removeChild(this.container);
     }

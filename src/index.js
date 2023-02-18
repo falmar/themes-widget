@@ -1,16 +1,15 @@
-import builder, { changeWidget } from './builder.js'
-
-const ENDPOINT = 'https://api.staging.heycarson.com'
+import builder, { changeWidget, checkSize } from './builder.js'
 
 const initialOptions = {
+  endpoint: 'https://api.heycarson.com',
   element: null,
   apiKey: null,
   developer: '',
   darkMode: false
 }
 
-const fetchDeveloper = async dev => {
-  return await fetch(`${ENDPOINT}/v1/themes/developers/${dev}`)
+const fetchDeveloper = async (endpoint, dev) => {
+  return await fetch(`${endpoint}/v1/themes/developers/${dev}`)
     .then((res) => {
       if (res.ok) {
         return res.json()
@@ -34,6 +33,21 @@ class ThemesWidget {
 
     this.container = null
     this.viewportHandler = null
+    this.observerTimeout = null
+
+    this.observer = new ResizeObserver(entries => {
+      clearTimeout(this.observerTimeout)
+
+      if (!entries.length) {
+        return
+      }
+
+      const { width } = entries[0].contentRect
+
+      this.observerTimeout = setTimeout(() => {
+        checkSize(this.container, width)
+      }, 100)
+    })
   }
 
   async render (options = {}) {
@@ -44,7 +58,7 @@ class ThemesWidget {
     this.options = { ...initialOptions, ...this.options, ...options, element: this.options.element }
 
     if (this.developer?.slug !== this.options.developer) {
-      this.developer = await fetchDeveloper(this.options.developer)
+      this.developer = await fetchDeveloper(this.options.endpoint, this.options.developer)
     }
 
     if (!this.developer) {
@@ -61,6 +75,8 @@ class ThemesWidget {
         dark: this.options.darkMode,
         reviews: this.developer.review_count
       })
+
+      this.observer.observe(this.container)
     } else {
       changeWidget(this.container, {
         rating,
@@ -75,6 +91,8 @@ class ThemesWidget {
     if (!this.options.element || !this.options.element.childNodes.length) {
       return
     }
+
+    this.observer.disconnect()
 
     this.container.removeEventListener('resize', this.viewportHandler)
 

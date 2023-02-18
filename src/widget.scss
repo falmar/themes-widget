@@ -4,7 +4,6 @@
   max-height: 180px;
   background: white;
   display: flex;
-  flex-wrap: wrap;
   gap: 16px;
   justify-content: center;
   align-items: center;
@@ -17,10 +16,21 @@
     background: linear-gradient(180deg, #0E1C6C -32.83%, #2A377D -32.83%, #2A377D -32.81%, #584DC4 131.29%);
   }
 
+  &--small {
+    flex-wrap: wrap;
+  }
+
   &__logo-container {
     height: 41px;
     flex: 0 1 auto;
     width: auto;
+    text-align: center;
+
+    &--small {
+      order: 3;
+      width: 100%;
+      flex: 0 1 auto;
+    }
   }
 
   &__logo {
@@ -35,6 +45,10 @@
     align-self: center;
     flex: 0 1 auto;
     width: auto;
+
+    &--small {
+      order: 1;
+    }
   }
 
   &__star {
@@ -59,6 +73,10 @@
     line-height: 20px;
     flex: 0 1 auto;
     width: auto;
+
+    &--small {
+      order: 2;
+    }
   }
 
   &__based {
