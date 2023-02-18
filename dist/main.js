@@ -2,6 +2,18 @@ const $8b83a3ea098f8f5b$var$logoImgLight = "https://carson-themes.s3.amazonaws.c
 const $8b83a3ea098f8f5b$var$logoImgDark = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg";
 const $8b83a3ea098f8f5b$var$starImg = "https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg";
 const $8b83a3ea098f8f5b$var$DEVELOPER_PAGE = "https://heycarson.com/themes/developer/";
+const $8b83a3ea098f8f5b$export$1d83028bd73dd3cc = (container, { dark: dark , rating: rating , reviews: reviews , developer: developer  } = {})=>{
+    container.classList.toggle("hc-developer-widget--dark", dark);
+    container.querySelector(".hc-developer-widget__logo").setAttribute("src", dark ? $8b83a3ea098f8f5b$var$logoImgDark : $8b83a3ea098f8f5b$var$logoImgLight);
+    container.querySelector(".hc-developer-widget__based").classList.toggle("hc-developer-widget__based--dark", dark);
+    const ratingEl = container.querySelector(".hc-developer-widget__rating");
+    ratingEl.innerText = `${rating} / 5`;
+    ratingEl.classList.toggle("hc-developer-widget__rating--dark", dark);
+    const reviewEl = container.querySelector(".hc-developer-widget__review");
+    reviewEl.innerText = reviews === 1 ? "1 review" : `${reviews} reviews`;
+    reviewEl.setAttribute("href", `${$8b83a3ea098f8f5b$var$DEVELOPER_PAGE}${developer}`);
+    reviewEl.classList.toggle("hc-developer-widget__review--dark", dark);
+};
 const $8b83a3ea098f8f5b$var$buildLogo = ({ dark: dark  })=>{
     const logoContainer = document.createElement("div");
     const logo = document.createElement("img");
@@ -44,10 +56,6 @@ const $8b83a3ea098f8f5b$var$buildReviews = ({ developer: developer , reviews: re
     return reviewContainer;
 };
 function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
-    // make sure rating is a number
-    //  if no decimal is present round to the base number
-    let rating = Number(options.developer.review_rating || optionns.developer.overall_rating || 0);
-    rating = rating.toFixed(Math.floor(rating) === rating ? 0 : 1);
     const container = document.createElement("div");
     container.classList.add("hc-developer-widget");
     container.classList.toggle("hc-developer-widget--dark", options.dark);
@@ -55,15 +63,16 @@ function $8b83a3ea098f8f5b$export$2e2bcd8739ae039(element, options = {}) {
         dark: options.dark
     }));
     container.appendChild($8b83a3ea098f8f5b$var$buildStar({
-        rating: rating,
+        rating: options.rating,
         dark: options.dark
     }));
     container.appendChild($8b83a3ea098f8f5b$var$buildReviews({
-        developer: options.developer.slug,
-        reviews: options.developer.review_count,
+        developer: options.developer,
+        reviews: options.reviews,
         dark: options.dark
     }));
     element.appendChild(container);
+    return container;
 }
 
 
@@ -74,6 +83,14 @@ const $cf838c15c8b009ba$var$initialOptions = {
     developer: "",
     darkMode: false
 };
+const $cf838c15c8b009ba$var$fetchDeveloper = async (dev)=>{
+    return await fetch(`${$cf838c15c8b009ba$var$ENDPOINT}/v1/themes/developers/${dev}`).then((res)=>{
+        if (res.ok) return res.json();
+        if (res.status === 404) return null;
+        const body = res.json();
+        throw new Error("Something went wrong" + (body?.message ? `: ${body.message}` : ""));
+    });
+};
 class $cf838c15c8b009ba$var$ThemesWidget {
     constructor(options = {}){
         this.options = {
@@ -81,18 +98,38 @@ class $cf838c15c8b009ba$var$ThemesWidget {
             ...options
         };
         this.developer = null;
+        this.container = null;
+        this.viewportHandler = null;
     }
-    async render() {
+    async render(options = {}) {
         if (!(this.options.element instanceof Element)) throw new Error("options.element: HTMLElement is required");
-        if (!this.developer) this.developer = await fetch(`${$cf838c15c8b009ba$var$ENDPOINT}/v1/themes/developers/${this.options.developer}`).then((res)=>res.json());
-        (0, $8b83a3ea098f8f5b$export$2e2bcd8739ae039)(this.options.element, {
-            developer: this.developer,
-            dark: this.options.darkMode
+        this.options = {
+            ...$cf838c15c8b009ba$var$initialOptions,
+            ...this.options,
+            ...options,
+            element: this.options.element
+        };
+        if (this.developer?.slug !== this.options.developer) this.developer = await $cf838c15c8b009ba$var$fetchDeveloper(this.options.developer);
+        if (!this.developer) throw new Error("Developer not found");
+        let rating = Number(this.developer.review_rating || this.developer.overall_rating || 0);
+        rating = rating.toFixed(Math.floor(rating) === rating ? 0 : 1);
+        if (!this.container) this.container = (0, $8b83a3ea098f8f5b$export$2e2bcd8739ae039)(this.options.element, {
+            rating: rating,
+            developer: this.developer.slug,
+            dark: this.options.darkMode,
+            reviews: this.developer.review_count
+        });
+        else (0, $8b83a3ea098f8f5b$export$1d83028bd73dd3cc)(this.container, {
+            rating: rating,
+            developer: this.developer.slug,
+            dark: this.options.darkMode,
+            reviews: this.developer.review_count
         });
     }
     destroy() {
         if (!this.options.element || !this.options.element.childNodes.length) return;
-        this.options.element.removeChild(this.options.element.childNodes[0]);
+        this.container.removeEventListener("resize", this.viewportHandler);
+        this.options.element.removeChild(this.container);
     }
 }
 var $cf838c15c8b009ba$export$2e2bcd8739ae039 = $cf838c15c8b009ba$var$ThemesWidget;

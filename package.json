@@ -9,6 +9,9 @@
   "css": "dist/main.css",
   "source": "src/index.js",
   "targets": {
+    "main": {
+      "source": "src/index.js"
+    },
     "css": {
       "source": "src/widget.scss"
     }

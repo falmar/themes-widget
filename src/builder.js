@@ -4,6 +4,26 @@ const starImg = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-star.sv
 
 const DEVELOPER_PAGE = 'https://heycarson.com/themes/developer/'
 
+export const changeWidget = (container, { dark, rating, reviews, developer } = {}) => {
+  container
+    .classList.toggle('hc-developer-widget--dark', dark)
+  container
+    .querySelector('.hc-developer-widget__logo')
+    .setAttribute('src', dark ? logoImgDark : logoImgLight)
+  container
+    .querySelector('.hc-developer-widget__based')
+    .classList.toggle('hc-developer-widget__based--dark', dark)
+
+  const ratingEl = container.querySelector('.hc-developer-widget__rating')
+  ratingEl.innerText = `${rating} / 5`
+  ratingEl.classList.toggle('hc-developer-widget__rating--dark', dark)
+
+  const reviewEl = container.querySelector('.hc-developer-widget__review')
+  reviewEl.innerText = reviews === 1 ? '1 review' : `${reviews} reviews`
+  reviewEl.setAttribute('href', `${DEVELOPER_PAGE}${developer}`)
+  reviewEl.classList.toggle('hc-developer-widget__review--dark', dark)
+}
+
 const buildLogo = ({ dark }) => {
   const logoContainer = document.createElement('div')
   const logo = document.createElement('img')
@@ -62,11 +82,6 @@ const buildReviews = ({ developer, reviews, dark }) => {
 }
 
 export default function builder (element, options = {}) {
-  // make sure rating is a number
-  //  if no decimal is present round to the base number
-  let rating = Number(options.developer.review_rating || optionns.developer.overall_rating || 0)
-  rating = rating.toFixed(Math.floor(rating) === rating ? 0: 1)
-
   const container = document.createElement('div')
 
   container.classList.add('hc-developer-widget')
@@ -74,14 +89,16 @@ export default function builder (element, options = {}) {
 
   container.appendChild(buildLogo({ dark: options.dark }))
   container.appendChild(buildStar({
-    rating: rating,
+    rating: options.rating,
     dark: options.dark
   }))
   container.appendChild(buildReviews({
-    developer: options.developer.slug,
-    reviews: options.developer.review_count,
+    developer: options.developer,
+    reviews: options.reviews,
     dark: options.dark
   }))
 
   element.appendChild(container)
+
+  return container
 }
