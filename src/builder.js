@@ -2,6 +2,7 @@ const logoImgLight = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-lo
 const logoImgDark = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg'
 const starImg = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg'
 
+const THEMES_PAGE = 'https://heycarson.com/themes'
 const DEVELOPER_PAGE = 'https://heycarson.com/themes/developer/'
 const smallBreakpoint = 410
 const containerPadding = 32
@@ -43,9 +44,12 @@ export const changeWidget = (container, { dark, rating, reviews, developer } = {
 }
 
 const buildLogo = ({ dark }) => {
-  const logoContainer = document.createElement('div')
+  const logoContainer = document.createElement('a')
   const logo = document.createElement('img')
 
+  logoContainer.setAttribute('href', THEMES_PAGE + '?wgl=1')
+  logoContainer.setAttribute('target', '_blank')
+  logoContainer.setAttribute('rel', 'noopener')
   logoContainer.classList.add('hc-developer-widget__logo-container')
   logo.classList.add('hc-developer-widget__logo')
   logo.setAttribute('src', dark ? logoImgDark : logoImgLight)
@@ -89,7 +93,7 @@ const buildReviews = ({ developer, reviews, dark }) => {
   based.innerText = 'Based on'
 
   review.innerText = `${reviews} reviews`
-  review.setAttribute('href', DEVELOPER_PAGE + developer)
+  review.setAttribute('href', DEVELOPER_PAGE + developer + '?wgl=1')
   review.setAttribute('target', '_blank')
   review.setAttribute('rel', 'noopener')
 

@@ -8,8 +8,8 @@ const initialOptions = {
   darkMode: false
 }
 
-const fetchDeveloper = async (endpoint, dev) => {
-  return await fetch(`${endpoint}/v1/themes/developers/${dev}`)
+const fetchDeveloper = async (endpoint, dev, wgp) => {
+  return await fetch(`${endpoint}/v1/themes/developers/${dev}${wgp ? '?wgp=1' : ''}`)
     .then((res) => {
       if (res.ok) {
         return res.json()
@@ -58,7 +58,7 @@ class ThemesWidget {
     this.options = { ...initialOptions, ...this.options, ...options, element: this.options.element }
 
     if (this.developer?.slug !== this.options.developer) {
-      this.developer = await fetchDeveloper(this.options.endpoint, this.options.developer)
+      this.developer = await fetchDeveloper(this.options.endpoint, this.options.developer, !this.developer)
     }
 
     if (!this.developer) {

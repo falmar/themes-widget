@@ -28,6 +28,7 @@ $font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetic
   }
 
   &__logo-container {
+    display: block;
     height: 41px;
     flex: 0 1 auto;
     width: auto;

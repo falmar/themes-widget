@@ -1,6 +1,7 @@
 const $8b83a3ea098f8f5b$var$logoImgLight = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-light.svg";
 const $8b83a3ea098f8f5b$var$logoImgDark = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg";
 const $8b83a3ea098f8f5b$var$starImg = "https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg";
+const $8b83a3ea098f8f5b$var$THEMES_PAGE = "https://heycarson.com/themes";
 const $8b83a3ea098f8f5b$var$DEVELOPER_PAGE = "https://heycarson.com/themes/developer/";
 const $8b83a3ea098f8f5b$var$smallBreakpoint = 410;
 const $8b83a3ea098f8f5b$var$containerPadding = 32;
@@ -24,8 +25,11 @@ const $8b83a3ea098f8f5b$export$1d83028bd73dd3cc = (container, { dark: dark , rat
     reviewEl.classList.toggle("hc-developer-widget__review--dark", dark);
 };
 const $8b83a3ea098f8f5b$var$buildLogo = ({ dark: dark  })=>{
-    const logoContainer = document.createElement("div");
+    const logoContainer = document.createElement("a");
     const logo = document.createElement("img");
+    logoContainer.setAttribute("href", $8b83a3ea098f8f5b$var$THEMES_PAGE + "?wgl=1");
+    logoContainer.setAttribute("target", "_blank");
+    logoContainer.setAttribute("rel", "noopener");
     logoContainer.classList.add("hc-developer-widget__logo-container");
     logo.classList.add("hc-developer-widget__logo");
     logo.setAttribute("src", dark ? $8b83a3ea098f8f5b$var$logoImgDark : $8b83a3ea098f8f5b$var$logoImgLight);
@@ -57,7 +61,7 @@ const $8b83a3ea098f8f5b$var$buildReviews = ({ developer: developer , reviews: re
     review.classList.toggle("hc-developer-widget__review--dark", dark);
     based.innerText = "Based on";
     review.innerText = `${reviews} reviews`;
-    review.setAttribute("href", $8b83a3ea098f8f5b$var$DEVELOPER_PAGE + developer);
+    review.setAttribute("href", $8b83a3ea098f8f5b$var$DEVELOPER_PAGE + developer + "?wgl=1");
     review.setAttribute("target", "_blank");
     review.setAttribute("rel", "noopener");
     reviewContainer.appendChild(based);
@@ -92,8 +96,8 @@ const $cf838c15c8b009ba$var$initialOptions = {
     developer: "",
     darkMode: false
 };
-const $cf838c15c8b009ba$var$fetchDeveloper = async (endpoint, dev)=>{
-    return await fetch(`${endpoint}/v1/themes/developers/${dev}`).then((res)=>{
+const $cf838c15c8b009ba$var$fetchDeveloper = async (endpoint, dev, wgp)=>{
+    return await fetch(`${endpoint}/v1/themes/developers/${dev}${wgp ? "?wgp=1" : ""}`).then((res)=>{
         if (res.ok) return res.json();
         if (res.status === 404) return null;
         const body = res.json();
@@ -127,7 +131,7 @@ class $cf838c15c8b009ba$var$ThemesWidget {
             ...options,
             element: this.options.element
         };
-        if (this.developer?.slug !== this.options.developer) this.developer = await $cf838c15c8b009ba$var$fetchDeveloper(this.options.endpoint, this.options.developer);
+        if (this.developer?.slug !== this.options.developer) this.developer = await $cf838c15c8b009ba$var$fetchDeveloper(this.options.endpoint, this.options.developer, !this.developer);
         if (!this.developer) throw new Error("Developer not found");
         let rating = Number(this.developer.review_rating || this.developer.overall_rating || 0);
         rating = rating.toFixed(Math.floor(rating) === rating ? 0 : 1);
