@@ -3,9 +3,11 @@ const logoImgDark = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-log
 const starImg = 'https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg'
 
 const DEVELOPER_PAGE = 'https://heycarson.com/themes/developer/'
+const smallBreakpoint = 410
+const containerPadding = 32
 
 export const checkSize = (container, width) => {
-  const isSmall = width <= 410
+  const isSmall = width <= smallBreakpoint - containerPadding
 
   container
     .classList.toggle('hc-developer-widget--small', isSmall)

@@ -2,8 +2,10 @@ const $8b83a3ea098f8f5b$var$logoImgLight = "https://carson-themes.s3.amazonaws.c
 const $8b83a3ea098f8f5b$var$logoImgDark = "https://carson-themes.s3.amazonaws.com/assets/heycarson-logo-dark.svg";
 const $8b83a3ea098f8f5b$var$starImg = "https://carson-themes.s3.amazonaws.com/assets/heycarson-star.svg";
 const $8b83a3ea098f8f5b$var$DEVELOPER_PAGE = "https://heycarson.com/themes/developer/";
+const $8b83a3ea098f8f5b$var$smallBreakpoint = 410;
+const $8b83a3ea098f8f5b$var$containerPadding = 32;
 const $8b83a3ea098f8f5b$export$c4a38de546513c4e = (container, width)=>{
-    const isSmall = width <= 410;
+    const isSmall = width <= $8b83a3ea098f8f5b$var$smallBreakpoint - $8b83a3ea098f8f5b$var$containerPadding;
     container.classList.toggle("hc-developer-widget--small", isSmall);
     container.querySelector(".hc-developer-widget__logo-container").classList.toggle("hc-developer-widget__logo-container--small", isSmall);
     container.querySelector(".hc-developer-widget__star-container").classList.toggle("hc-developer-widget__star-container--small", isSmall);

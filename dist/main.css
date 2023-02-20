@@ -1,2 +1,108 @@
-.hc-developer-widget{max-width:440px;min-height:105px;max-height:180px;color:#0b1033;background:#fff;border-radius:2px;justify-content:center;align-items:center;gap:16px;padding-top:32px;padding-bottom:32px;display:flex}.hc-developer-widget--dark{background:linear-gradient(#0e1c6c -32.83%,#2a377d -32.83% -32.81%,#584dc4 131.29%)}.hc-developer-widget--small{flex-wrap:wrap}.hc-developer-widget__logo-container{height:41px;width:auto;text-align:center;flex:0 auto}.hc-developer-widget__logo-container--small{width:100%;flex:0 auto;order:3}.hc-developer-widget__logo{width:135px;height:41px}.hc-developer-widget__star-container{width:auto;flex:0 auto;justify-content:center;align-self:center;gap:4px;display:flex}.hc-developer-widget__star-container--small{order:1}.hc-developer-widget__star{width:30px;height:30px}.hc-developer-widget__rating{color:#0b1033;font-size:22px;line-height:35px}.hc-developer-widget__rating--dark{color:#fff}.hc-developer-widget__review-container{height:20px;width:auto;flex:0 auto;gap:4px;line-height:20px;display:flex}.hc-developer-widget__review-container--small{order:2}.hc-developer-widget__based{color:#0b1033!important;font-size:14px!important}.hc-developer-widget__based--dark{color:#fff!important}.hc-developer-widget__review{color:#0b1033!important;font-size:14px!important;text-decoration:underline!important}.hc-developer-widget__review--dark{color:#fff!important}
+@import "https://fonts.googleapis.com/css2?family=Roboto&display=swap";
+.hc-developer-widget {
+  max-width: 440px;
+  min-height: 105px;
+  max-height: 180px;
+  color: #0b1033;
+  background: #fff;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  display: flex;
+}
+
+.hc-developer-widget--dark {
+  background: linear-gradient(#0e1c6c -32.83%, #2a377d -32.83% -32.81%, #584dc4 131.29%);
+}
+
+.hc-developer-widget--small {
+  flex-wrap: wrap;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.hc-developer-widget__logo-container {
+  height: 41px;
+  width: auto;
+  text-align: center;
+  flex: 0 auto;
+}
+
+.hc-developer-widget__logo-container--small {
+  width: 100%;
+  flex: 0 auto;
+  order: 3;
+}
+
+.hc-developer-widget__logo {
+  width: 135px;
+  height: 41px;
+}
+
+.hc-developer-widget__star-container {
+  width: auto;
+  flex: 0 auto;
+  justify-content: center;
+  align-self: center;
+  gap: 4px;
+  display: flex;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji !important;
+}
+
+.hc-developer-widget__star-container--small {
+  order: 1;
+}
+
+.hc-developer-widget__star {
+  width: 30px;
+  height: 30px;
+}
+
+.hc-developer-widget__rating {
+  color: #0b1033;
+  font-size: 22px;
+  line-height: 35px;
+}
+
+.hc-developer-widget__rating--dark {
+  color: #fff;
+}
+
+.hc-developer-widget__review-container {
+  height: 20px;
+  width: auto;
+  flex: 0 auto;
+  gap: 4px;
+  line-height: 20px;
+  display: flex;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji !important;
+}
+
+.hc-developer-widget__review-container--small {
+  order: 2;
+}
+
+.hc-developer-widget__based {
+  color: #0b1033 !important;
+  font-size: 14px !important;
+}
+
+.hc-developer-widget__based--dark {
+  color: #fff !important;
+}
+
+.hc-developer-widget__review {
+  color: #0b1033 !important;
+  font-size: 14px !important;
+  text-decoration: underline !important;
+}
+
+.hc-developer-widget__review--dark {
+  color: #fff !important;
+}
+
 /*# sourceMappingURL=main.css.map */
